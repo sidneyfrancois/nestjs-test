@@ -1,0 +1,21 @@
+GET http://localhost:3000/users
+
+###
+GET http://localhost:3000/users/posts
+
+###
+POST http://localhost:3000/users/create
+Content-Type: application/json
+
+{
+  "username": "test-user",
+  "email": "test@email.com"
+}
+
+###
+GET http://localhost:3000/users/23
+
+###
+GET http://localhost:3000/users
+    ?sortBy=asc
+    &sortDesc=true
