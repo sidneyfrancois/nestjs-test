@@ -9,7 +9,7 @@ import {
   Post,
   Query,
   UsePipes,
-  ValidationPipe,
+  ValidationPipe
 } from '@nestjs/common'
 import { CreateUserDTO } from 'src/users/dtos/create.user.dto'
 
@@ -18,7 +18,7 @@ export class UsersController {
   @Get()
   getUsers(
     @Query('sortBy') sortyBy: string,
-    @Query('sortDesc', ParseBoolPipe) sortDesc: boolean,
+    @Query('sortDesc', ParseBoolPipe) sortDesc: boolean
   ) {
     console.log(sortyBy)
     console.log(typeof sortyBy)
@@ -26,7 +26,7 @@ export class UsersController {
     console.log(typeof sortDesc)
     return {
       username: 'sidney',
-      email: 'sidney@email.com',
+      email: 'sidney@email.com'
     }
   }
 
@@ -39,14 +39,14 @@ export class UsersController {
         posts: [
           {
             id: 1,
-            title: 'post 1',
+            title: 'post 1'
           },
           {
             id: 2,
-            title: 'post 2',
-          },
-        ],
-      },
+            title: 'post 2'
+          }
+        ]
+      }
     ]
   }
 
