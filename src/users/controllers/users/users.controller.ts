@@ -4,63 +4,30 @@ import {
   Get,
   HttpCode,
   Param,
-  ParseBoolPipe,
-  ParseIntPipe,
   Post,
-  Query,
-  UsePipes,
-  ValidationPipe
+  Query
 } from '@nestjs/common'
-import { CreateUserDTO } from 'src/users/dtos/create.user.dto'
+import { UsersService } from '@src/users/services/users/users.service'
+import { CreateUserRequest } from '@src/users/validations/user.create.validation'
+import { GetUsersQueryFilters } from '@src/users/validations/user.filters.validations'
 
 @Controller('users')
 export class UsersController {
-  @Get()
-  getUsers(
-    @Query('sortBy') sortyBy: string,
-    @Query('sortDesc', ParseBoolPipe) sortDesc: boolean
-  ) {
-    console.log(sortyBy)
-    console.log(typeof sortyBy)
-    console.log(sortDesc)
-    console.log(typeof sortDesc)
-    return {
-      username: 'sidney',
-      email: 'sidney@email.com'
-    }
-  }
+  constructor(private readonly userService: UsersService) {}
 
-  @Get('posts')
-  getUsersPosts() {
-    return [
-      {
-        username: 'sidney',
-        email: 'sidney@email.com',
-        posts: [
-          {
-            id: 1,
-            title: 'post 1'
-          },
-          {
-            id: 2,
-            title: 'post 2'
-          }
-        ]
-      }
-    ]
+  @Get()
+  getUsers(@Query() queryParams: GetUsersQueryFilters) {
+    return this.userService.findAll(queryParams)
   }
 
   @Post('create')
   @HttpCode(201)
-  @UsePipes(new ValidationPipe())
-  createUser(@Body() userData: CreateUserDTO) {
-    return userData
+  createUser(@Body() userData: CreateUserRequest) {
+    return this.userService.create(userData)
   }
 
   @Get(':id')
-  getUserById(@Param('id', ParseIntPipe) id: number) {
-    console.log(id)
-    console.log(typeof id)
+  getUserById(@Param('id') id: number) {
     return id
   }
 }

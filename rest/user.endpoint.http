@@ -1,4 +1,9 @@
 GET http://localhost:3000/users
+    ?page=2
+    &limit=10
+    &sortBy=asc
+    &name=sidney
+    &age=30
 
 ###
 GET http://localhost:3000/users/posts
@@ -8,7 +13,10 @@ POST http://localhost:3000/users/create
 Content-Type: application/json
 
 {
-  "username": "test-user",
+  "id": 1,
+  "firstName": "Beltrano",
+  "lastName": "de Tal",
+  "age": 23,
   "email": "test@email.com"
 }
 
@@ -18,4 +26,12 @@ GET http://localhost:3000/users/23
 ###
 GET http://localhost:3000/users
     ?sortBy=asc
-    &sortDesc=true
+
+###
+POST http://localhost:3000/users/transform/34
+Content-Type: application/json
+
+{
+  "username": "test-user",
+  "email": "test@email.com"
+}
