@@ -1,6 +1,6 @@
 import { DefaultFilterOptions } from './filters'
 
-export interface UserFilters extends DefaultFilterOptions {
+export type UserFilters = {
   name?: string
   age?: number
-}
+} & DefaultFilterOptions

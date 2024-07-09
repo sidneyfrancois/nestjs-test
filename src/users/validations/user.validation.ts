@@ -3,7 +3,7 @@ import { User } from '../entity/user'
 
 export class UserValidation implements User {
   @IsNumber()
-  id: number
+  id: string
 
   @IsString()
   firstName: string

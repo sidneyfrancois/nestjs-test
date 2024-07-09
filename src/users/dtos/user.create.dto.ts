@@ -1,3 +1,3 @@
 import { User } from '../entity/user'
 
-export interface UserCreateDTO extends User {}
+export type UserCreateDTO = Omit<User, 'id'>

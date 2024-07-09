@@ -13,15 +13,14 @@ POST http://localhost:3000/users/create
 Content-Type: application/json
 
 {
-  "id": 1,
-  "firstName": "Beltrano",
+  "firstName": "Fulano",
   "lastName": "de Tal",
   "age": 23,
   "email": "test@email.com"
 }
 
 ###
-GET http://localhost:3000/users/23
+GET http://localhost:3000/users/asdf
 
 ###
 GET http://localhost:3000/users
