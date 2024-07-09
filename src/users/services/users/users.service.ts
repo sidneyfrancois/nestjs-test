@@ -8,9 +8,15 @@ import { v4 as uuidv4 } from 'uuid'
 export class UsersService {
   private readonly users: User[] = []
 
-  create(user: UserCreateDTO) {
+  create(user: UserCreateDTO): User {
     const newId = uuidv4()
-    this.users.push({ id: newId, ...user })
+    const newUser = { id: newId, ...user }
+    this.users.push(newUser)
+    return newUser
+  }
+
+  findById(id: string): User {
+    return this.users.find((user: User) => user.id === id)
   }
 
   findAll(filters: UserFilters): User[] {

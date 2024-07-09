@@ -7,6 +7,8 @@ import {
   Post,
   Query
 } from '@nestjs/common'
+import { User } from '@src/users/entity/user'
+import { FetchUser } from '@src/users/pipes/fetch.user.pipe'
 import { UsersService } from '@src/users/services/users/users.service'
 import { CreateUserRequest } from '@src/users/validations/user.create.validation'
 import { GetUsersQueryFilters } from '@src/users/validations/user.filters.validations'
@@ -16,18 +18,18 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  getUsers(@Query() queryParams: GetUsersQueryFilters) {
+  getUsers(@Query() queryParams: GetUsersQueryFilters): User[] {
     return this.userService.findAll(queryParams)
   }
 
   @Post('create')
   @HttpCode(201)
-  createUser(@Body() userData: CreateUserRequest) {
+  createUser(@Body() userData: CreateUserRequest): User {
     return this.userService.create(userData)
   }
 
   @Get(':id')
-  getUserById(@Param('id') id: number) {
-    return id
+  getUserById(@Param('id', FetchUser) userEntity: User): User {
+    return userEntity
   }
 }
