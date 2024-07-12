@@ -1,0 +1,31 @@
+@project_id = {{ createProject.response.body.id }}
+
+###
+GET http://localhost:3000/projects
+
+###
+GET http://localhost:3000/projects/79472d2a-4810-4098-a0cb-c84466d6cb8d
+
+###
+# @name createProject
+POST http://localhost:3000/projects
+Content-Type: application/json
+
+{
+  "name": "Test Project",
+  "description": "description of project"
+}
+
+
+###
+PATCH  http://localhost:3000/projects/{{project_id}}
+Content-Type: application/json
+
+{
+  "name": "Modified Project",
+  "description": "new description",
+  "started_at": "2024-07-08"
+}
+
+###
+DELETE http://localhost:3000/projects/79472d2a-4810-4098-a0cb-c84466d6cb8d
