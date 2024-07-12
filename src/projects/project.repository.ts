@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CreateProjectDto } from './dto/create-project.dto'
-import { Project, ProjectStatus } from './entities/project.entity'
-import { v4 as uuidv4 } from 'uuid'
+import { Project } from './entities/project.entity'
 
 @Injectable()
 export class ProjectsRepository {
@@ -34,15 +32,8 @@ export class ProjectsRepository {
     return null
   }
 
-  create(project: CreateProjectDto): Project {
-    const projectId = uuidv4()
-    let status = ProjectStatus.Pending
-
-    if (project.started_at) status = ProjectStatus.Active
-
-    const newProject = { id: projectId, ...project, status }
-    this.projects.push(newProject)
-
-    return newProject as Project
+  create(project: Project): Project {
+    this.projects.push(project)
+    return project
   }
 }

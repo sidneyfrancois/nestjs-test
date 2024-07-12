@@ -3,13 +3,20 @@ import { CreateProjectDto } from './dto/create-project.dto'
 import { UpdateProjectDto } from './dto/update-project.dto'
 import { ProjectsRepository } from './project.repository'
 import { ProjectStatus } from './entities/project.entity'
+import { v4 as uuidv4 } from 'uuid'
 
 @Injectable()
 export class ProjectsService {
   constructor(private readonly projectsRepository: ProjectsRepository) {}
 
   create(createProjectDto: CreateProjectDto) {
-    return this.projectsRepository.create(createProjectDto)
+    const projectId = uuidv4()
+    let status = ProjectStatus.Pending
+
+    if (createProjectDto.started_at) status = ProjectStatus.Active
+
+    const newProject = { id: projectId, ...createProjectDto, status }
+    return this.projectsRepository.create(newProject)
   }
 
   findAll() {
