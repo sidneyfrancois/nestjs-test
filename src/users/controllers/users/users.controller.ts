@@ -5,8 +5,10 @@ import {
   HttpCode,
   Param,
   Post,
-  Query
+  Query,
+  UseGuards
 } from '@nestjs/common'
+import { AuthGuard } from '@src/guards/auth.guard'
 import { User } from '@src/users/entity/user'
 import { FetchUser } from '@src/users/pipes/fetch.user.pipe'
 import { UsersService } from '@src/users/services/users/users.service'
@@ -14,6 +16,7 @@ import { CreateUserRequest } from '@src/users/validations/user.create.validation
 import { GetUsersQueryFilters } from '@src/users/validations/user.filters.validations'
 
 @Controller('users')
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
@@ -29,7 +32,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUserById(@Param('id', FetchUser) userEntity: User): User {
-    return userEntity
+  getUserById(@Param('id', FetchUser) user: User): User {
+    console.log('user: ', user)
+    return user
   }
 }

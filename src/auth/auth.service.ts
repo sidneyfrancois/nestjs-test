@@ -33,7 +33,11 @@ export class AuthService {
 
     if (!isPasswordValid) throw new Error('invalid login')
 
-    const payload = { sub: user.id, username: user.username }
+    const payload = {
+      sub: user.id,
+      username: user.username,
+      name: user.firstName
+    }
 
     return {
       id: user.id,

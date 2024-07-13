@@ -1,16 +1,28 @@
+@token = {{ login.response.body.access_token }}
+
 GET http://localhost:3000/users
     ?page=2
     &limit=10
     &sortBy=asc
     &name=sidney
     &age=30
+Content-Type: application/json
+Authorization: Bearer {{ token }}
 
 ###
-GET http://localhost:3000/users/posts
+# @name login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "adsfs"
+}
 
 ###
 POST http://localhost:3000/users/create
 Content-Type: application/json
+Authorization: Bearer {{ token }}
 
 {
   "firstName": "Beltrano",
@@ -20,13 +32,6 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/users/ba81f515-a8a0-4b3f-86df-f5c641b1b0f1
-
-###
-POST http://localhost:3000/users/transform/34
+GET http://localhost:3000/users/b4089103-77bd-4259-baf5-e8f0a1828b41
 Content-Type: application/json
-
-{
-  "username": "test-user",
-  "email": "test@email.com"
-}
+Authorization: Bearer {{ token }}

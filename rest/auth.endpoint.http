@@ -1,5 +1,7 @@
+@token = {{ login.response.body.access_token }}
 
 ###
+# @name login
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -7,6 +9,12 @@ Content-Type: application/json
   "username": "test",
   "password": "adsfs"
 }
+
+###
+GET http://localhost:3000/auth/profile
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
 
 ###
 POST http://localhost:3000/auth/signin
