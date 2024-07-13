@@ -5,10 +5,8 @@ import {
   HttpCode,
   Param,
   Post,
-  Query,
-  UseGuards
+  Query
 } from '@nestjs/common'
-import { AuthGuard } from '@src/guards/auth.guard'
 import { User } from '@src/users/entity/user'
 import { FetchUser } from '@src/users/pipes/fetch.user.pipe'
 import { UsersService } from '@src/users/services/users/users.service'
@@ -16,7 +14,6 @@ import { CreateUserRequest } from '@src/users/validations/user.create.validation
 import { GetUsersQueryFilters } from '@src/users/validations/user.filters.validations'
 
 @Controller('users')
-@UseGuards(AuthGuard)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
