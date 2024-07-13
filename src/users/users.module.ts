@@ -5,6 +5,7 @@ import { IsUserAlreadyExistConstraint } from './validations/custom-validations/u
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, IsUserAlreadyExistConstraint]
+  providers: [UsersService, IsUserAlreadyExistConstraint],
+  exports: [UsersService]
 })
 export class UsersModule {}

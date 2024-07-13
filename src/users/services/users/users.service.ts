@@ -24,8 +24,13 @@ export class UsersService {
     return this.users
   }
 
-  findByName(userName: string): User {
-    const user = this.users.find((user: User) => user.firstName === userName)
+  findByUsername(username: string): User {
+    const user = this.users.find((user: User) => user.username === username)
+    return user
+  }
+
+  findByName(name: string): User {
+    const user = this.users.find((user: User) => user.firstName === name)
     return user
   }
 }

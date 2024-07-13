@@ -18,4 +18,10 @@ export class CreateUserRequest extends OmitType(UserValidation, [
 
   @IsNotEmpty()
   email: string
+
+  @IsNotEmpty()
+  username: string
+
+  @IsNotEmpty()
+  password: string
 }

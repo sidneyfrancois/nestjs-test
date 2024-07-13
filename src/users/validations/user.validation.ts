@@ -16,4 +16,10 @@ export class UserValidation implements User {
 
   @IsEmail()
   email: string
+
+  @IsString()
+  username: string
+
+  @IsString()
+  password: string
 }
