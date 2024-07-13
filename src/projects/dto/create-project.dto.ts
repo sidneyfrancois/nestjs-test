@@ -6,5 +6,5 @@ export class CreateProjectDto {
   @IsNotEmpty()
   description: string
   @IsOptional()
-  started_at: Date
+  started_at?: Date
 }
