@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsString } from 'class-validator'
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator'
 import { User } from '../entity/user'
 
 export class UserValidation implements User {
@@ -22,4 +22,7 @@ export class UserValidation implements User {
 
   @IsString()
   password: string
+
+  @IsNotEmpty()
+  roles: string[]
 }

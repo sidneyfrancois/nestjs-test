@@ -7,6 +7,7 @@ import {
   Post,
   Query
 } from '@nestjs/common'
+import { Roles } from '@src/decorators/role.decorator'
 import { User } from '@src/users/entity/user'
 import { FetchUser } from '@src/users/pipes/fetch.user.pipe'
 import { UsersService } from '@src/users/services/users/users.service'
@@ -23,6 +24,7 @@ export class UsersController {
   }
 
   @Post('create')
+  @Roles(['admin'])
   @HttpCode(201)
   createUser(@Body() userData: CreateUserRequest): User {
     return this.userService.create(userData)

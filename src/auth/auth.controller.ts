@@ -12,12 +12,14 @@ import { CreateUserRequest } from '@src/users/validations/user.create.validation
 import { CurrentUser } from '@src/decorators/user.decorator'
 import { User } from '@src/users/entity/user'
 import { Public } from '@src/decorators/public.decorator'
+import { Roles } from '@src/decorators/role.decorator'
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Get('profile')
+  @Roles(['admin'])
   getProfile(
     @CurrentUser() user: User,
     @CurrentUser('username') username: string,

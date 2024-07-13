@@ -1,6 +1,6 @@
 import { OmitType } from '@nestjs/mapped-types'
 import { UserValidation } from './user.validation'
-import { IsNotEmpty } from 'class-validator'
+import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator'
 import { IsUserAlreadyExist } from './custom-validations/user-already-exists'
 
 export class CreateUserRequest extends OmitType(UserValidation, [
@@ -24,4 +24,9 @@ export class CreateUserRequest extends OmitType(UserValidation, [
 
   @IsNotEmpty()
   password: string
+
+  @IsArray()
+  @IsString({ each: true })
+  @ArrayMinSize(1)
+  roles: string[]
 }
