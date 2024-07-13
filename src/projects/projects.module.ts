@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ProjectsService } from './projects.service'
 // import { ProjectsController } from './projects.controller'
-import { ProjectsRepository } from './project.repository'
+import { ProjectsMemoryRepository } from './project.memory.repository'
 import { CreateProjectUseCase } from './userCases/create-project-use-case'
 import { ProjectsControllerUseCase } from './project.user-case.controller'
 import { FindAllProjectsUseCase } from './userCases/find-all-projects-user-case'
@@ -14,10 +14,14 @@ import { StartProjectUseCase } from './userCases/start-project-use-case'
   ],
   providers: [
     ProjectsService,
-    ProjectsRepository,
+    ProjectsMemoryRepository,
     CreateProjectUseCase,
     FindAllProjectsUseCase,
-    StartProjectUseCase
+    StartProjectUseCase,
+    {
+      provide: 'IProjectRepository',
+      useClass: ProjectsMemoryRepository
+    }
   ]
 })
 export class ProjectsModule {}

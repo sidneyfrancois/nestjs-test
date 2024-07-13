@@ -1,14 +1,17 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { CreateProjectDto } from './dto/create-project.dto'
 import { UpdateProjectDto } from './dto/update-project.dto'
-import { ProjectsRepository } from './project.repository'
 import { Project, ProjectStatus } from './entities/project.entity'
 import { v4 as uuidv4 } from 'uuid'
 import { plainToInstance } from 'class-transformer'
+import { IProjectRepository } from './project.repository'
 
 @Injectable()
 export class ProjectsService {
-  constructor(private readonly projectsRepository: ProjectsRepository) {}
+  constructor(
+    @Inject('IProjectRepository')
+    private readonly projectsRepository: IProjectRepository
+  ) {}
 
   create(createProjectDto: CreateProjectDto) {
     const projectId = uuidv4()

@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { Project } from '../entities/project.entity'
-import { ProjectsRepository } from '../project.repository'
+import { IProjectRepository } from '../project.repository'
 
 @Injectable()
 export class FindAllProjectsUseCase {
-  constructor(private readonly projectsRepository: ProjectsRepository) {}
+  constructor(
+    @Inject('IProjectRepository')
+    private readonly projectsRepository: IProjectRepository
+  ) {}
 
   execute(): Project[] {
     return this.projectsRepository.getAll()

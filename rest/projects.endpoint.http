@@ -13,8 +13,7 @@ Content-Type: application/json
 
 {
   "name": "Test Project",
-  "description": "description of project",
-  "started_at": "2024-07-08"
+  "description": "description of project"
 }
 
 

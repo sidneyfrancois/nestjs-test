@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { CreateProjectDto } from '../dto/create-project.dto'
 import { Project } from '../entities/project.entity'
-import { ProjectsRepository } from '../project.repository'
 import { plainToInstance } from 'class-transformer'
+import { IProjectRepository } from '../project.repository'
 
 @Injectable()
 export class CreateProjectUseCase {
-  constructor(private readonly projectsRepository: ProjectsRepository) {}
+  constructor(
+    @Inject('IProjectRepository')
+    private readonly projectsRepository: IProjectRepository
+  ) {}
 
   execute(input: CreateProjectDto): Project {
     const project = plainToInstance(Project, input)

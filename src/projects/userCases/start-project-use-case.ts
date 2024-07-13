@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { Project } from '../entities/project.entity'
-import { ProjectsRepository } from '../project.repository'
 import { StartProjectDTO } from '../dto/start-project.dto'
+import { IProjectRepository } from '../project.repository'
 
 @Injectable()
 export class StartProjectUseCase {
-  constructor(private readonly projectsRepository: ProjectsRepository) {}
+  constructor(
+    @Inject('IProjectRepository')
+    private readonly projectsRepository: IProjectRepository
+  ) {}
 
   execute(input: StartProjectDTO): Project {
     const project = this.projectsRepository.getById(input.id)
