@@ -12,7 +12,7 @@ async function bootstrap() {
     whitelist: true,
     forbidNonWhitelisted: true,
     validationError: {
-      target: false,
+      target: true,
       value: true
     },
     exceptionFactory: (validationErrors: ValidationError[] = []) => {

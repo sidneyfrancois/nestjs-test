@@ -29,7 +29,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     response.status(status).json({
       statusCode: status,
-      error: exceptionResponse.message,
+      error:
+        exceptionResponse.message?.clientMessage ?? exceptionResponse.message,
       'validation-erros': validationErrors ?? undefined
     })
   }

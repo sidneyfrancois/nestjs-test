@@ -7,10 +7,15 @@ export class ModelValidationExceptionFactory extends HttpException {
       property: fieldError.property,
       value: fieldError?.value ?? null,
       constraints: fieldError.constraints,
-      contexts: fieldError?.contexts ?? 'no contexts provided'
+      contexts: {
+        classValidationName: fieldError.target.constructor.name
+      }
     }))
     super(
-      { 'validation-errors': validationErrors, message: 'erro no formulário' },
+      {
+        'validation-errors': validationErrors,
+        message: invalidFields[0].target['getDefaultFormErrorMessage']()
+      },
       HttpStatus.BAD_REQUEST
     )
   }

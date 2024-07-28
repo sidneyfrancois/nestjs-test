@@ -5,6 +5,13 @@ import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator'
 export class CreateUserRequest extends OmitType(UserValidation, [
   'id'
 ] as const) {
+  public getDefaultFormErrorMessage() {
+    return {
+      logMessage: 'error on user registration',
+      clientMessage: 'erro no cadastro de usuário'
+    }
+  }
+
   @IsNotEmpty()
   firstName: string
 
@@ -12,11 +19,7 @@ export class CreateUserRequest extends OmitType(UserValidation, [
   lastName: string
 
   @IsNotEmpty({
-    message: 'teste de erro na idade',
-    context: {
-      errorCode: 1003,
-      classValidation: CreateUserRequest.name
-    }
+    message: 'idade nao pode ser vazia'
   })
   age: number
 

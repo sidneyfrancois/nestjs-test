@@ -22,6 +22,7 @@ export class ErrorsInterceptor implements NestInterceptor {
     return next.handle().pipe(
       catchError((error: any) => {
         const errorLog = {
+          'error-message': error.getResponse().message.logMessage,
           timestamp: new Date().toISOString(),
           method: request.method,
           controller: className,
@@ -36,7 +37,9 @@ export class ErrorsInterceptor implements NestInterceptor {
         let errorContext = className
 
         if (error instanceof ModelValidationExceptionFactory) {
-          const validationErrors = error.getResponse() as any
+          const validationErrors = error.getResponse()[
+            'validation-errors'
+          ] as any
           errorLog['validation-errors'] = validationErrors
           errorContext = 'MODEL_VALIDATION'
         }

@@ -29,12 +29,6 @@ export function IsUserAlreadyExist() {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
-      options: {
-        context: {
-          errorCode: 1003,
-          classValidation: object.constructor.name
-        }
-      },
       constraints: [],
       validator: IsUserAlreadyExistConstraint
     })
