@@ -4,7 +4,8 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  Get
+  Get,
+  UsePipes
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { UserLoginDTO } from './dto/user-login.dto'
@@ -13,6 +14,7 @@ import { CurrentUser } from '@src/decorators/user.decorator'
 import { User } from '@src/users/entity/user'
 import { Public } from '@src/decorators/public.decorator'
 import { Roles } from '@src/decorators/role.decorator'
+import { IsUserAlreadyExistsPipe } from '@src/users/pipes/validate-exist-user.pipe'
 
 @Controller('auth')
 export class AuthController {
@@ -39,6 +41,7 @@ export class AuthController {
 
   @Public()
   @Post('signin')
+  @UsePipes(IsUserAlreadyExistsPipe)
   async register(@Body() user: CreateUserRequest) {
     return await this.authService.signIn(user)
   }

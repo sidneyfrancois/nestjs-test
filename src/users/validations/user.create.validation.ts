@@ -1,13 +1,11 @@
 import { OmitType } from '@nestjs/mapped-types'
 import { UserValidation } from './user.validation'
 import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator'
-import { IsUserAlreadyExist } from './custom-validations/user-already-exists'
 
 export class CreateUserRequest extends OmitType(UserValidation, [
   'id'
 ] as const) {
   @IsNotEmpty()
-  @IsUserAlreadyExist()
   firstName: string
 
   @IsNotEmpty()
