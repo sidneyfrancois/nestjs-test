@@ -1,6 +1,5 @@
 import {
   registerDecorator,
-  ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface
 } from 'class-validator'
@@ -25,13 +24,12 @@ export class IsUserAlreadyExistConstraint
   }
 }
 
-export function IsUserAlreadyExist(validationOptions?: ValidationOptions) {
+export function IsUserAlreadyExist() {
   return function (object: object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
       options: {
-        ...validationOptions,
         context: {
           errorCode: 1003,
           classValidation: object.constructor.name
