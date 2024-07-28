@@ -36,11 +36,10 @@ export class ErrorsInterceptor implements NestInterceptor {
         let errorContext = className
 
         if (error instanceof ModelValidationExceptionFactory) {
-          errorLog['validation-errors'] = error.getResponse()
+          const validationErrors = error.getResponse() as any
+          errorLog['validation-errors'] = validationErrors
           errorContext = 'MODEL_VALIDATION'
         }
-
-        errorLog['validation-errors'] = error.getResponse()
 
         this.logger.error(JSON.stringify(errorLog), error.stack, errorContext)
         // just in local, in production use stringify

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { UsersService } from '@src/users/services/users/users.service'
 import * as bcrypt from 'bcrypt'
 import { UserLoginDTO } from './dto/user-login.dto'
@@ -24,7 +24,7 @@ export class AuthService {
   async login(userLogin: UserLoginDTO) {
     const user = this.userSerivce.findByUsername(userLogin.username)
 
-    if (!user) throw new Error('user dont exist')
+    if (!user) throw new UnprocessableEntityException('user dont exist')
 
     const isPasswordValid = await bcrypt.compare(
       userLogin.password,

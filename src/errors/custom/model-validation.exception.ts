@@ -9,6 +9,9 @@ export class ModelValidationExceptionFactory extends HttpException {
       constraints: fieldError.constraints,
       contexts: fieldError?.contexts ?? 'no contexts provided'
     }))
-    super(validationErrors, HttpStatus.BAD_REQUEST)
+    super(
+      { 'validation-errors': validationErrors, message: 'erro no formulário' },
+      HttpStatus.BAD_REQUEST
+    )
   }
 }

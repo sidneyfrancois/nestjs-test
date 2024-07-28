@@ -5,6 +5,7 @@ import {
   HttpException
 } from '@nestjs/common'
 import { Response } from 'express'
+import { ModelValidationExceptionFactory } from '../custom/model-validation.exception'
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -12,19 +13,24 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp()
     const response = ctx.getResponse<Response>()
     const status = exception.getStatus()
+    const exceptionResponse = exception.getResponse() as any
 
-    const exceptionResponse = exception.getResponse() as Array<any>
+    let validationErrors = null
 
-    const validationErrors = exceptionResponse.map((error) => {
-      const validationError = { ...error }
-      delete validationError['contexts']
-      return validationError
-    })
+    if (exception instanceof ModelValidationExceptionFactory) {
+      const exceptionResponse = exception.getResponse() as any
+
+      validationErrors = exceptionResponse['validation-errors'].map((error) => {
+        const validationError = { ...error }
+        delete validationError['contexts']
+        return validationError
+      })
+    }
 
     response.status(status).json({
       statusCode: status,
-      error: 'erro na validação de usuário',
-      'validation-erros': validationErrors
+      error: exceptionResponse.message,
+      'validation-erros': validationErrors ?? undefined
     })
   }
 }

@@ -20,7 +20,6 @@ async function bootstrap() {
     }
   })
 
-  // console.log('config pipe: ', customGlobalPipe)
   app.useGlobalPipes(customGlobalPipe)
   useContainer(app.select(AppModule), { fallbackOnErrors: true })
   await app.listen(3000)
