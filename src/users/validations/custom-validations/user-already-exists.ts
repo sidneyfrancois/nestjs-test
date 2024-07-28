@@ -19,6 +19,10 @@ export class IsUserAlreadyExistConstraint
     if (user) return false
     return true
   }
+
+  defaultMessage(): string {
+    return `O usuário de nome $value já existe.`
+  }
 }
 
 export function IsUserAlreadyExist(validationOptions?: ValidationOptions) {
@@ -26,7 +30,13 @@ export function IsUserAlreadyExist(validationOptions?: ValidationOptions) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
-      options: { message: 'Usuário já existe.', ...validationOptions },
+      options: {
+        ...validationOptions,
+        context: {
+          errorCode: 1003,
+          classValidation: object.constructor.name
+        }
+      },
       constraints: [],
       validator: IsUserAlreadyExistConstraint
     })

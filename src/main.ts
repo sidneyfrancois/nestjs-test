@@ -1,18 +1,27 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
-import { useContainer } from 'class-validator'
+import { useContainer, ValidationError } from 'class-validator'
+import { ModelValidationExceptionFactory } from './errors/custom/model-validation.exception'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      stopAtFirstError: true,
-      whitelist: true,
-      forbidNonWhitelisted: true
-    })
-  )
+  const customGlobalPipe = new ValidationPipe({
+    transform: true,
+    stopAtFirstError: true,
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    validationError: {
+      target: false,
+      value: true
+    },
+    exceptionFactory: (validationErrors: ValidationError[] = []) => {
+      return new ModelValidationExceptionFactory(validationErrors)
+    }
+  })
+
+  // console.log('config pipe: ', customGlobalPipe)
+  app.useGlobalPipes(customGlobalPipe)
   useContainer(app.select(AppModule), { fallbackOnErrors: true })
   await app.listen(3000)
 }

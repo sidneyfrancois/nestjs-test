@@ -13,7 +13,13 @@ export class CreateUserRequest extends OmitType(UserValidation, [
   @IsNotEmpty()
   lastName: string
 
-  @IsNotEmpty()
+  @IsNotEmpty({
+    message: 'teste de erro na idade',
+    context: {
+      errorCode: 1003,
+      classValidation: CreateUserRequest.name
+    }
+  })
   age: number
 
   @IsNotEmpty()
