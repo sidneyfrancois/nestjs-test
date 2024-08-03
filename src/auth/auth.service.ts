@@ -2,7 +2,6 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { UsersService } from '@src/users/services/users/users.service'
 import * as bcrypt from 'bcrypt'
 import { UserLoginDTO } from './dto/user-login.dto'
-import { UserCreateDTO } from '@src/users/dtos/user.create.dto'
 import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
@@ -12,10 +11,10 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async signIn(singInUser: UserCreateDTO) {
-    const user = this.userSerivce.findByName(singInUser.username)
+  async signIn(singInUser: any) {
+    // const user = this.userSerivce.findByName(singInUser.username)
 
-    if (user) throw new Error('user already exists')
+    // if (user) throw new Error('user already exists')
 
     singInUser.password = await bcrypt.hash(singInUser.password, 8)
     return this.userSerivce.create(singInUser)

@@ -1,36 +1,34 @@
 import { Injectable } from '@nestjs/common'
 import { UserFilters } from '@src/filters/user.filters'
-import { UserCreateDTO } from '@src/users/dtos/user.create.dto'
-import { User } from '@src/users/entity/user'
 import { v4 as uuidv4 } from 'uuid'
 
 @Injectable()
 export class UsersService {
-  private readonly users: User[] = []
+  private readonly users: any[] = []
 
-  create(user: UserCreateDTO): User {
+  create(user: any): any {
     const newId = uuidv4()
     const newUser = { id: newId, ...user }
     this.users.push(newUser)
     return newUser
   }
 
-  findById(id: string): User {
-    return this.users.find((user: User) => user.id === id)
+  findById(id: string): any {
+    return this.users.find((user: any) => user.id === id)
   }
 
-  findAll(filters: UserFilters): User[] {
+  findAll(filters: UserFilters): any[] {
     if (filters.name) console.log('filters: ', { ...filters })
     return this.users
   }
 
-  findByUsername(username: string): User {
-    const user = this.users.find((user: User) => user.username === username)
+  findByUsername(username: string): any {
+    const user = this.users.find((user: any) => user.username === username)
     return user
   }
 
-  findByName(name: string): User {
-    const user = this.users.find((user: User) => user.firstName === name)
+  findByName(name: string): any {
+    const user = this.users.find((user: any) => user.firstName === name)
     return user
   }
 }

@@ -8,7 +8,6 @@ import {
   Query
 } from '@nestjs/common'
 import { Roles } from '@src/decorators/role.decorator'
-import { User } from '@src/users/entity/user'
 import { FetchUser } from '@src/users/pipes/fetch.user.pipe'
 import { UsersService } from '@src/users/services/users/users.service'
 import { CreateUserRequest } from '@src/users/validations/user.create.validation'
@@ -19,19 +18,19 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  getUsers(@Query() queryParams: GetUsersQueryFilters): User[] {
+  getUsers(@Query() queryParams: GetUsersQueryFilters): any[] {
     return this.userService.findAll(queryParams)
   }
 
   @Post('create')
   @Roles(['admin'])
   @HttpCode(201)
-  createUser(@Body() userData: CreateUserRequest): User {
+  createUser(@Body() userData: CreateUserRequest): any {
     return this.userService.create(userData)
   }
 
   @Get(':id')
-  getUserById(@Param('id', FetchUser) user: User): User {
+  getUserById(@Param('id', FetchUser) user: any): any {
     console.log('user: ', user)
     return user
   }

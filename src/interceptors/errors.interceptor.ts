@@ -44,9 +44,9 @@ export class ErrorsInterceptor implements NestInterceptor {
           errorContext = 'MODEL_VALIDATION'
         }
 
-        this.logger.error(JSON.stringify(errorLog), error.stack, errorContext)
+        // this.logger.error(JSON.stringify(errorLog), error.stack, errorContext)
         // just in local, in production use stringify
-        // this.logger.error(errorLog, error.stack, errorContext)
+        this.logger.error(errorLog, error.stack, errorContext)
         throw error
       })
     )

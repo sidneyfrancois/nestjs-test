@@ -1,6 +1,14 @@
-import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator'
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsString
+} from 'class-validator'
+import { User } from '@src/entities/User'
 
-export class CreateUserRequest {
+export class CreateUserValidator implements User {
   public getDefaultFormErrorMessage() {
     return {
       logMessage: 'error on user registration',
@@ -8,23 +16,29 @@ export class CreateUserRequest {
     }
   }
 
+  @IsString()
   @IsNotEmpty()
   firstName: string
 
+  @IsString()
   @IsNotEmpty()
   lastName: string
 
+  @IsNumber()
   @IsNotEmpty({
     message: 'idade nao pode ser vazia'
   })
   age: number
 
+  @IsEmail()
   @IsNotEmpty()
   email: string
 
+  @IsString()
   @IsNotEmpty()
   username: string
 
+  @IsString()
   @IsNotEmpty()
   password: string
 

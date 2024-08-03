@@ -9,12 +9,11 @@ import {
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { UserLoginDTO } from './dto/user-login.dto'
-import { CreateUserRequest } from '@src/users/validations/user.create.validation'
 import { CurrentUser } from '@src/decorators/user.decorator'
-import { User } from '@src/users/entity/user'
 import { Public } from '@src/decorators/public.decorator'
 import { Roles } from '@src/decorators/role.decorator'
 import { IsUserAlreadyExistsPipe } from '@src/users/pipes/validate-exist-user.pipe'
+import { CreateUserValidator } from '@src/shared/validators/user/create-user-validator'
 
 @Controller('auth')
 export class AuthController {
@@ -23,13 +22,13 @@ export class AuthController {
   @Get('profile')
   @Roles(['admin'])
   getProfile(
-    @CurrentUser() user: User,
+    // @CurrentUser() user: User,
     @CurrentUser('username') username: string,
     @CurrentUser('name') name: string
   ) {
     console.log('username: ', username)
     console.log('name', name)
-    return user
+    // return user
   }
 
   @HttpCode(HttpStatus.OK)
@@ -42,7 +41,7 @@ export class AuthController {
   @Public()
   @Post('signin')
   @UsePipes(IsUserAlreadyExistsPipe)
-  async register(@Body() user: CreateUserRequest) {
+  async register(@Body() user: CreateUserValidator) {
     return await this.authService.signIn(user)
   }
 }
